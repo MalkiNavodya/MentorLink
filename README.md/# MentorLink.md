@@ -37,7 +37,7 @@ The purpose of this project is to create a platform where students and professio
 
 ## Developer
 
-Your Name
+S.P.M.N.Senevirathna
 
 ## Status
 
