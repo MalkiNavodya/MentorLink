@@ -1,0 +1,803 @@
+<div class="dashboard-shell">
+
+  <!-- Ambient background -->
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="grid-overlay"></div>
+
+
+  <!-- =========================
+       SIDEBAR
+  ========================== -->
+
+  <aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="brand">
+
+      <div class="brand-logo">
+        M
+      </div>
+
+      <div class="brand-copy">
+        <strong>MentorLink</strong>
+        <span>Skill Exchange</span>
+      </div>
+
+    </div>
+
+
+    <!-- Navigation -->
+    <nav class="navigation">
+
+      <div class="nav-label">
+        MENU
+      </div>
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item">
+
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+
+      </a>
+
+
+      <a
+        routerLink="/mentors"
+        class="nav-item">
+
+        <span class="nav-icon">◎</span>
+        <span>Find Mentors</span>
+
+      </a>
+
+
+      <a
+        routerLink="/requests"
+        class="nav-item">
+
+        <span class="nav-icon">↗</span>
+        <span>Requests</span>
+
+        <span class="nav-badge">
+          •
+        </span>
+
+      </a>
+
+
+      <a
+        routerLink="/sessions"
+        class="nav-item">
+
+        <span class="nav-icon">◷</span>
+        <span>My Sessions</span>
+
+      </a>
+
+    </nav>
+
+
+    <!-- Bottom sidebar -->
+    <div class="sidebar-bottom">
+
+      <div class="sidebar-tip">
+
+        <div class="tip-glow"></div>
+
+        <div class="tip-icon">
+          ✦
+        </div>
+
+        <div class="tip-content">
+          <strong>Keep growing</strong>
+          <span>
+            Learn something new every day.
+          </span>
+        </div>
+
+      </div>
+
+
+      <button
+        class="logout-button"
+        type="button"
+        (click)="logout()">
+
+        <span>↪</span>
+        Sign out
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================
+       MAIN CONTENT
+  ========================== -->
+
+  <main class="main-content">
+
+
+    <!-- Top bar -->
+    <header class="topbar">
+
+      <div class="mobile-brand">
+
+        <div class="mobile-logo">
+          M
+        </div>
+
+        <strong>MentorLink</strong>
+
+      </div>
+
+
+      <div class="topbar-right">
+
+        <button
+          type="button"
+          class="notification-button"
+          aria-label="Notifications">
+
+          <span class="notification-icon">
+            ♢
+          </span>
+
+          <span class="notification-dot"></span>
+
+        </button>
+
+
+        <div class="user-profile">
+
+          <div class="user-avatar">
+
+            {{
+              (user?.name || 'U')
+                .charAt(0)
+                .toUpperCase()
+            }}
+
+          </div>
+
+          <div class="user-details">
+
+            <strong>
+              {{ user?.name || 'User' }}
+            </strong>
+
+            <span>
+              {{ user?.role?.name || 'Member' }}
+            </span>
+
+          </div>
+
+          <span class="profile-arrow">
+            ↓
+          </span>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================
+         LOADING
+    ========================== -->
+
+    <section
+      class="loading-state"
+      *ngIf="loading">
+
+      <div class="loading-orb">
+
+        <div></div>
+
+      </div>
+
+      <p>
+        Loading your dashboard...
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         ERROR
+    ========================== -->
+
+    <section
+      class="error-state"
+      *ngIf="!loading && errorMessage">
+
+      <div class="error-symbol">
+        !
+      </div>
+
+      <div class="error-text">
+
+        <strong>
+          Dashboard unavailable
+        </strong>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        (click)="loadUser()">
+
+        Try again
+
+      </button>
+
+    </section>
+
+
+    <!-- =========================
+         ACTUAL DASHBOARD
+    ========================== -->
+
+    <ng-container
+      *ngIf="!loading && !errorMessage">
+
+
+      <!-- =========================
+           HERO
+      ========================== -->
+
+      <section class="hero-section">
+
+
+        <!-- Hero content -->
+        <div class="hero-content">
+
+          <div class="hero-eyebrow">
+
+            <span class="eyebrow-line"></span>
+
+            MENTORLINK SPACE
+
+          </div>
+
+
+          <h1>
+
+            Learn.
+            <span>Exchange.</span>
+            Grow.
+
+          </h1>
+
+
+          <p class="hero-description">
+
+            Connect with people who know what
+            you want to learn and share the skills
+            you already have.
+
+          </p>
+
+
+          <div class="hero-actions">
+
+            <button
+              type="button"
+              class="primary-button"
+              (click)="goToMentors()">
+
+              <span>
+                Find a Mentor
+              </span>
+
+              <span class="button-arrow">
+                ↗
+              </span>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="goToRequests()">
+
+              View Requests
+
+            </button>
+
+          </div>
+
+
+          <div class="hero-meta">
+
+            <div class="meta-item">
+
+              <span class="meta-dot"></span>
+
+              <span>
+                Learn from others
+              </span>
+
+            </div>
+
+            <div class="meta-item">
+
+              <span class="meta-dot"></span>
+
+              <span>
+                Share your knowledge
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             3D VISUAL
+        ========================== -->
+
+        <div class="hero-visual">
+
+          <div class="visual-ring ring-one"></div>
+          <div class="visual-ring ring-two"></div>
+          <div class="visual-ring ring-three"></div>
+
+
+          <div class="orb-shadow"></div>
+
+
+          <div class="main-orb">
+
+            <div class="orb-highlight"></div>
+
+            <div class="orb-core"></div>
+
+            <span class="orb-point point-one"></span>
+            <span class="orb-point point-two"></span>
+            <span class="orb-point point-three"></span>
+            <span class="orb-point point-four"></span>
+
+          </div>
+
+
+          <!-- Floating card 1 -->
+          <div class="floating-card floating-card-one">
+
+            <div class="floating-card-icon green-icon">
+              ✦
+            </div>
+
+            <div>
+              <strong>
+                Skills
+              </strong>
+
+              <span>
+                Exchange freely
+              </span>
+            </div>
+
+          </div>
+
+
+          <!-- Floating card 2 -->
+          <div class="floating-card floating-card-two">
+
+            <div class="floating-avatar">
+              M
+            </div>
+
+            <div>
+              <strong>
+                Mentorship
+              </strong>
+
+              <span>
+                Connections matter
+              </span>
+            </div>
+
+          </div>
+
+
+          <!-- Floating mini badge -->
+          <div class="floating-badge">
+
+            <span class="badge-star">
+              ✦
+            </span>
+
+            <span>
+              Grow together
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           QUICK STATS
+      ========================== -->
+
+      <section class="stats-section">
+
+
+        <div class="section-heading">
+
+          <div>
+            <span class="section-kicker">
+              OVERVIEW
+            </span>
+
+            <h2>
+              Your learning space
+            </h2>
+          </div>
+
+          <span class="live-indicator">
+            <span></span>
+            Active
+          </span>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+
+          <!-- Skills -->
+          <article class="stat-card">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon green">
+                ✦
+              </div>
+
+              <span class="stat-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div class="stat-number">
+              —
+            </div>
+
+            <div class="stat-title">
+              Skills
+            </div>
+
+            <p>
+              Discover skills you can learn
+              or share with others.
+            </p>
+
+            <button
+              type="button"
+              class="stat-link"
+              (click)="goToMentors()">
+
+              Explore skills
+              <span>→</span>
+
+            </button>
+
+          </article>
+
+
+          <!-- Mentors -->
+          <article class="stat-card featured">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon purple">
+                ◎
+              </div>
+
+              <span class="stat-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div class="stat-number">
+              —
+            </div>
+
+            <div class="stat-title">
+              Mentors
+            </div>
+
+            <p>
+              Find experienced people ready
+              to help you grow.
+            </p>
+
+            <button
+              type="button"
+              class="stat-link"
+              (click)="goToMentors()">
+
+              Find mentors
+              <span>→</span>
+
+            </button>
+
+          </article>
+
+
+          <!-- Sessions -->
+          <article class="stat-card">
+
+            <div class="stat-card-top">
+
+              <div class="stat-icon orange">
+                ◷
+              </div>
+
+              <span class="stat-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div class="stat-number">
+              —
+            </div>
+
+            <div class="stat-title">
+              Sessions
+            </div>
+
+            <p>
+              Keep track of your upcoming
+              mentorship sessions.
+            </p>
+
+            <button
+              type="button"
+              class="stat-link"
+              (click)="goToSessions()">
+
+              View sessions
+              <span>→</span>
+
+            </button>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           PERSONAL WELCOME
+      ========================== -->
+
+      <section class="welcome-section">
+
+        <div class="welcome-content">
+
+          <span class="section-kicker">
+            YOUR JOURNEY
+          </span>
+
+          <h2>
+
+            Welcome back,
+            <span>
+              {{ user?.name || 'Learner' }}
+            </span>
+
+          </h2>
+
+          <p>
+
+            Your next opportunity to learn,
+            teach, or make a meaningful connection
+            could be one conversation away.
+
+          </p>
+
+
+          <div class="welcome-pills">
+
+            <span>
+              <b></b>
+              Learn
+            </span>
+
+            <span>
+              <b></b>
+              Teach
+            </span>
+
+            <span>
+              <b></b>
+              Connect
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="welcome-art">
+
+          <div class="art-circle circle-back"></div>
+          <div class="art-circle circle-middle"></div>
+
+          <div class="art-logo">
+            M
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           QUICK ACTIONS
+      ========================== -->
+
+      <section class="actions-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <span class="section-kicker">
+              GET STARTED
+            </span>
+
+            <h2>
+              What would you like to do?
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="action-grid">
+
+
+          <button
+            type="button"
+            class="action-card"
+            (click)="goToMentors()">
+
+            <div class="action-icon">
+              ◎
+            </div>
+
+            <div class="action-content">
+
+              <strong>
+                Find a mentor
+              </strong>
+
+              <span>
+                Learn from someone experienced.
+              </span>
+
+            </div>
+
+            <span class="action-arrow">
+              ↗
+            </span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="action-card"
+            (click)="goToRequests()">
+
+            <div class="action-icon">
+              ↗
+            </div>
+
+            <div class="action-content">
+
+              <strong>
+                Manage requests
+              </strong>
+
+              <span>
+                Check your mentorship requests.
+              </span>
+
+            </div>
+
+            <span class="action-arrow">
+              ↗
+            </span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="action-card"
+            (click)="goToSessions()">
+
+            <div class="action-icon">
+              ◷
+            </div>
+
+            <div class="action-content">
+
+              <strong>
+                View sessions
+              </strong>
+
+              <span>
+                See your upcoming mentorship.
+              </span>
+
+            </div>
+
+            <span class="action-arrow">
+              ↗
+            </span>
+
+          </button>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           FOOTER
+      ========================== -->
+
+      <footer class="dashboard-footer">
+
+        <div>
+          <span class="footer-logo">
+            M
+          </span>
+
+          <span>
+            MentorLink
+          </span>
+        </div>
+
+        <span>
+          Learn together. Grow together.
+        </span>
+
+      </footer>
+
+
+    </ng-container>
+
+  </main>
+
+</div>
